@@ -1,0 +1,1 @@
+{"name":"Local: sale","url":"/home/nbx/Desktop/solve/sale.cpp","tests":[{"id":1720274332447,"input":"5 3\n-6 0 35 -2 4","output":"8"},{"id":1720274342079,"input":"4 2\n7 0 0 -7","output":"7"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/nbx/Desktop/solve/sale.cpp","group":"local","local":true}

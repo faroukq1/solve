@@ -7,13 +7,13 @@ int main() {
 
     vector<int> pos(n);
 
-
-    for (int i = 0 ;i < n ;i++)
-        cin >> pos[i];
-
+    for (auto &p : pos)
+        cin >> p;
 
     sort(pos.begin(),pos.end());
+
     
+
     double maxGap = 0.0;
 
     for (int i = 1 ; i < n ; i++)
@@ -25,6 +25,8 @@ int main() {
     maxRad = max(maxRad , maxGap / 2.0);
 
     cout << fixed << setprecision(10) << maxRad;
+
+
 }
 
 
