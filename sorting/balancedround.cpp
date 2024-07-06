@@ -19,19 +19,20 @@ int main () {
 
         sort(test.begin(),test.end());
 
-        int res = 1;
-        int cpt = 1;
+        int res = 1 , cpt = 1;
+
         for (int i = 1 ; i < n ; i++) {
-            int diff = (test[i] - test[i - 1]);
-            if (diff <= k) 
+            const int diff = test[i] - test[i - 1];
+            if (diff <= k)
                 cpt++;
             else {
                 res = max(res , cpt);
                 cpt = 1;
             }
-        }    
+        }
+        
         res = max(res , cpt);
-        cout << (n - res) << "\n";
+        cout <<(n - res)<< endl;
     }
 
 }
