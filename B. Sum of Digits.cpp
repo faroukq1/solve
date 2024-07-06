@@ -3,23 +3,24 @@ using namespace std;
 
 
 int main () {
-    int N;
+    string N;
     cin >> N;
-    vector<int> arr(N) , solve;
-
-    for (int i = 0 ; i < N ; i++)
-        cin >> arr[i];
-
-    set <int> seen;
-
-    for (int i = 0 ; i < N ; i++) {
-        auto find = seen.find(arr[i]);
-        if (find == seen.end()) {
-            solve.push_back(arr[i]);
-            seen.insert(arr[i]);
-        }
+    if (N.length() < 2) {
+        cout << 0;
+        return 0;
     }
 
-    for(int i = 0 ; i < solve.size(); i++)
-        cout << solve[i]  << ' ';
+
+    int cpt = 0 , x = 11;
+    while (x >= 10) {
+        x = 0;
+        for (int i = 0 ; i < N.length() ;i++)
+            x = x + (N[i] - '0');
+
+        N = to_string(x);
+
+        cpt++;
+    }
+
+    cout << cpt;
 }
