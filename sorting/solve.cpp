@@ -10,22 +10,23 @@ int main() {
   int N;
   cin >> N;
 
-  vector<int> arr(N) , solve;
+  vector<int> arr(N), remove;
 
-  for (int i = 0 ; i < N  ; i++)
-      cin >> arr[i];
+  for (auto &a : arr)
+    cin >> a;
 
-  set<int> seen;
+  sort(arr.begin(),arr.end());
+
+  set <int> seen;
 
   for (int i = 0 ; i < N ; i++) {
-    auto find = seen.find(arr[i]);
-    if (find == seen.end()) {
-      solve.push_back(arr[i]);
+    auto isHere = seen.find(arr[i]);
+    if (isHere == seen.end()) {
+      remove.push_back(arr[i]);
       seen.insert(arr[i]);
-      
     }
   }
-  for (int i = 0 ;i < solve.size() ;i++) {
-    cout << solve[i];
-  }
+
+  for (auto &a : remove)
+    cout << a << ' ';
 } 
