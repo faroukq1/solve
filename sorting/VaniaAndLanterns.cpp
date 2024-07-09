@@ -20,5 +20,5 @@ int main() {
   double maxRad = max((double)pos[0], (double)(l - pos[n - 1]));
   maxRad = max(maxRad, maxGap / 2.0);
 
-  cout << fixed << setprecision(10) << maxRad << endl;
+  cout << fixed << setprecision(10) << maxRad;
 }
