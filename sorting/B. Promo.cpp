@@ -1,12 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include <algorithm>
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
 int main() {
   long long N, K;
   cin >> N >> K;
