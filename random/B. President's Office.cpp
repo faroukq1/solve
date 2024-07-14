@@ -50,7 +50,9 @@ void solve() {
         for (int k = 0; k < 4; k++) {
           int tox = i + dirx[k];
           int toy = j + diry[k];
-          if (valid(tox, toy) && room[tox][toy] != col && room[tox][toy] != '.')
+          bool possible =
+              valid(tox, toy) && room[tox][toy] != col && room[tox][toy] != '.';
+          if (possible)
             seen.insert(room[tox][toy]);
         }
       }
