@@ -51,36 +51,12 @@ signed main() {
   string word;
   cin >> word;
 
-  auto cantPrint = [&](char symbol) -> bool {
-    int distance = 1;
-    for (int i = 0; i < keys.size(); i++) {
-      if (distance > c)
-        return true;
-
-      distance = 1;
-      for (int j = 0; j < keys[i].length(); j++) {
-        const int letter = keys[i][j];
-        const char compareLetter = isupper(symbol) ? tolower(symbol) : symbol;
-
-        if (letter == compareLetter)
-          break;
-        else
-          distance++;
-      }
-    }
-
-    return false;
-  };
-
   int cpt = 0;
 
   for (int i = 0; i < word.length(); i++) {
     const char symbol = word[i];
     if (symbol > 'A' && symbol < 'Z')
-      if (cantPrint(symbol))
-        cpt++;
-
-    dbg((char)symbol, cpt);
+      dbg((char)symbol, cpt);
   }
 
   cout << cpt;
