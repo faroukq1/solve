@@ -29,7 +29,7 @@ void getPermutation(vector<int> &arr, int start) {
     swap(arr[start], arr[i]);
   }
 }
-}
+
 int main() {
   // complete search
   // Complete search is a general method that can be used to solve almost any
