@@ -1,23 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 // get sub arrays
-void printSubArrays(vector<int> &arr, int start, int end) {
-  for (int i = start; i <= end; i++)
-    cout << arr[i] << ' ';
-}
-
-void generateSubArray(vector<int> &arr, int start, int end) {
-  if (end == arr.size())
+void getSubArray(vector<int> &arr, int start, int end) {
+  if (start > end)
     return;
+  // print subarray
+  for (int i = start; i <= end; i++)
+    cout << arr[i] << ' ' << "\n";
 
-  else if (start > end)
-    generateSubArray(arr, 0, end + 1);
-  else {
-    printSubArrays(arr, start, end);
-    generateSubArray(arr, start + 1, end);
+  getSubArray(arr, start + 1, end);
+  getSubArray(arr, start, end - 1);
+}
+// get perimutation
+void getPermutation(vector<int> &arr, int start) {
+  if (start == arr.size() - 1)
+    for (auto &a : arr)
+      cout << a << ' ' << '\n';
+
+  // Recursive case: swap current element with each element that comes after it
+  for (int i = start; i < arr.size(); i++) {
+    // Swap elements
+    swap(arr[start], arr[i]);
+
+    // Recurse on the rest of the array
+    generatePermutationsRecursive(arr, start + 1);
+
+    // Backtrack: undo the swap
+    swap(arr[start], arr[i]);
   }
 }
-
+}
 int main() {
   // complete search
   // Complete search is a general method that can be used to solve almost any
