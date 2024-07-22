@@ -30,34 +30,61 @@ const int MXN = 1e5 + 5, INF = 1e9 + 5;
 signed main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
-  int a, b, c;
-  cin >> a >> b >> c;
-  vector<string> keys(a);
+  int n, m, x, cpt = -1;
+  string q;
   bool containShift = false;
-  for (int i = 0; i <= a; i++) {
-    string a;
-    cin >> a;
-    for (int i = 0; i < a.length(); i++)
-      if (a[i] == 'S')
+  cin >> n >> m >> x >> q;
+
+  vector<vector<char>> keys(n + 1, vector<char>(m));
+  for (int i = 0; i <= n; i++)
+    for (int j = 0; j < m; j++) {
+      char c;
+      cin >> c;
+      if (c == 'S')
         containShift = true;
-    keys[i] = a;
-  }
 
-  if (!containShift) {
-    cout << "-1";
-    return 0;
-  }
+      keys[i][j] = c;
+    }
 
-  string word;
-  cin >> word;
+  for (int i = 0; i < q.length(); i++) {
+    if (isupper(q[i]) && !containShift)
+      break;
 
-  int cpt = 0;
+    auto getDistnace = [&](char q1, char q2) -> int {
+      int cpt = 0;
+      for (int i = 0; i <= m; i++) {
 
-  for (int i = 0; i < word.length(); i++) {
-    const char symbol = word[i];
-    if (symbol > 'A' && symbol < 'Z')
-      dbg((char)symbol, cpt);
+        for (int j = 0; j < n; j++) {
+          if (keys[i][j] == q1)
+            for (int k = i; k < keys[i].size(); k++)
+              if (keys[i][k] == q2)
+                return cpt;
+              else
+                for (int k = i; k < keys[i].size(); k++)
+                  if (keys[i][k] == q1)
+                    return cpt;
+          cpt++;
+        }
+      }
+      return -1;
+    };
+    bool find = false;
+    for (int i = 0; i < n; i++)
+      for (int j = 0; j < m; j++)
+        if (keys[i][j] == q[i]) {
+          find = true;
+          int distance = getDistnace(q[i], q[i + 1]);
+          if (distance == -1)
+            cpt++;
+          else if (distance / 2 > x)
+            cpt++;
+        }
+
+    if (!find)
+      break;
   }
 
   cout << cpt;
+
+  return 0;
 }
