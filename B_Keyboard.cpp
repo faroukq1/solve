@@ -27,64 +27,66 @@ template <typename S, typename T> void smin(S &a, const T &b) {
 #define sz(x) (int)(x).size()
 const int MXN = 1e5 + 5, INF = 1e9 + 5;
 
-signed main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  int n, m, x, cpt = -1;
-  string q;
-  bool containShift = false;
-  cin >> n >> m >> x >> q;
+bool can[26];
+int n, m, k, q, res = 0;
+char key[31][31];
+char text[1000000];
+vector<pair<int, int>> posKey[26], shift;
 
-  vector<vector<char>> keys(n + 1, vector<char>(m));
-  for (int i = 0; i <= n; i++)
+int dist(int i, int j, int shr, int shc) {
+  return (i - shr) * (i - shr) + (j - shc) * (j - shc);
+}
+
+bool check(int i, int j) {
+  for (int w = 0; w < shift.size(); w++) {
+    int dis = dist(i, j, shift[w].first, shift[w].second);
+    if (dis <= k * k)
+      return true;
+  }
+  return false;
+}
+
+int main()
+
+{
+  scanf("%d%d%d", &n, &m, &k);
+  for (int i = 0; i < n; i++) // keyboard keys
+    scanf("%s", key[i]);
+
+  for (int i = 0; i < n; i++)
     for (int j = 0; j < m; j++) {
-      char c;
-      cin >> c;
-      if (c == 'S')
-        containShift = true;
-
-      keys[i][j] = c;
+      if (key[i][j] == 'S')
+        shift.push_back(make_pair(i, j)); // position of each key
+      else
+        posKey[key[i][j] - 'a'].push_back(make_pair(i, j));
     }
 
-  for (int i = 0; i < q.length(); i++) {
-    if (isupper(q[i]) && !containShift)
-      break;
+  for (int i = 0; i < 26; i++)
+    for (int j = 0; j < posKey[i].size() && !can[i];
+         j++) { // check of each key if can press on it with one hand
+      can[i] = can[i] | check(posKey[i][j].first, posKey[i][j].second);
+    }
 
-    auto getDistnace = [&](char q1, char q2) -> int {
-      int cpt = 0;
-      for (int i = 0; i <= m; i++) {
-
-        for (int j = 0; j < n; j++) {
-          if (keys[i][j] == q1)
-            for (int k = i; k < keys[i].size(); k++)
-              if (keys[i][k] == q2)
-                return cpt;
-              else
-                for (int k = i; k < keys[i].size(); k++)
-                  if (keys[i][k] == q1)
-                    return cpt;
-          cpt++;
-        }
+  scanf("%d%s", &q, text);
+  for (int i = 0; i < q; i++) {
+    if (islower(text[i])) {
+      if (posKey[text[i] - 'a'].empty()) {
+        res = -1;
+        break;
       }
-      return -1;
-    };
-    bool find = false;
-    for (int i = 0; i < n; i++)
-      for (int j = 0; j < m; j++)
-        if (keys[i][j] == q[i]) {
-          find = true;
-          int distance = getDistnace(q[i], q[i + 1]);
-          if (distance == -1)
-            cpt++;
-          else if (distance / 2 > x)
-            cpt++;
-        }
+    } else {
+      text[i] = tolower(text[i]);
 
-    if (!find)
-      break;
+      if (shift.empty() || posKey[text[i] - 'a'].empty()) {
+        res = -1;
+        break;
+      }
+
+      if (!can[text[i] - 'a'])
+        ++res;
+    }
   }
-
-  cout << cpt;
+  printf("%d", res);
 
   return 0;
 }
