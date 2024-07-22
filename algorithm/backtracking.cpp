@@ -24,4 +24,4 @@ void search(int y) {
     column[x] = daig1[x + y] = diag2[x - y + n - 1] = 0
   }
 }
-int main() {}
+int main() { return 0; }
