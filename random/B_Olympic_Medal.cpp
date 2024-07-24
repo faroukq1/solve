@@ -12,7 +12,7 @@ const int INF = 1e9 + 5;
 const int AKA = 5e5 + 5;
 double arr[AKA];
 
-signed main() {
+int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   int n;
@@ -37,4 +37,5 @@ signed main() {
   cin >> A >> B;
   double ans = ((double)B * p1 * r1 * r1) / ((double)A * p2 + B * p1);
   cout << fixed << setprecision(12) << sqrt(ans);
+  return 0;
 }
