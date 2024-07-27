@@ -74,15 +74,11 @@ signed main() {
     return cpt1 >= 3 || cpt2 >= 3;
   };
 
-  for (int i = 0; i < sides.size(); i++) {
-    vector<pair<int, int>> side = sides[i];
-    if (valid(side)) {
+  for (int i = 0; i < sides.size(); i++)
+    if (valid(sides[i])) {
       cout << "YES";
       return 0;
     }
-  }
 
   cout << "NO";
-
-  return 0;
 }
