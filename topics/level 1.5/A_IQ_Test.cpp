@@ -10,19 +10,6 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 
 const int MXN = 1e5 + 5, INF = 1e9 + 5;
 
-pair<int, int> side1[] = {
-
-};
-pair<int, int> side2[] = {
-
-};
-pair<int, int> side3[] = {
-
-};
-pair<int, int> side4[] = {
-
-};
-
 vector<vector<pair<int, int>>> sides = {{
                                             {0, 0},
                                             {0, 1},
