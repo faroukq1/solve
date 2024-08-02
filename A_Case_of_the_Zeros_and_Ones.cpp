@@ -14,19 +14,19 @@ int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(nullptr);
   int N;
+  cin >> N;
   string a;
-  cin >> N >> a;
+  cin >> a;
 
-  stack<char> st;
+  stack<int> store;
 
-  for (char c : a)
-    if (!st.empty() &&
-        ((st.top() == '1' && c == '0') || (st.top() == '0' && c == '1')))
-      st.pop();
+  for (auto c : a)
+    if (!store.empty() &&
+        ((store.top() == '0' && c == '1') || (store.top() == '1' && c == '0')))
+      store.pop();
     else
-      st.push(c);
+      store.push(c);
 
-  cout << st.size() << '\n';
-
+  cout << store.size();
   return 0;
 }
