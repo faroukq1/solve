@@ -19,10 +19,12 @@ int main() {
   cin >> a;
 
   stack<int> store;
-
+  auto valid = [&](char &c) -> bool {
+    return !store.empty() && ((store.top() == '0' && c == '1') ||
+                              (store.top() == '1' && c == '0'));
+  };
   for (auto c : a)
-    if (!store.empty() &&
-        ((store.top() == '0' && c == '1') || (store.top() == '1' && c == '0')))
+    if (valid(c))
       store.pop();
     else
       store.push(c);
