@@ -1,40 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define mod 1000000007
-int main() {
-  ios_base::sync_with_stdio(0), cin.tie(0);
-  vector<int> a[100001];
-  int n;
-  cin >> n;
-  for (int i = 0; i < n; i++) {
-    int x;
-    cin >> x;
-    a[x].push_back(i);
-  }
 
-  vector<pair<int, int>> ans;
-  for (int i = 0; i < 100001; i++) {
-    if (a[i].size() == 0)
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
+  cerr << ' ' << H;
+  dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
+
+const int MXN = 1e5 + 5, INF = 1e9 + 5;
+vector<vector<int>> freq(MXN);
+signed main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  map<int, vector<int>> store;
+
+  int N;
+  cin >> N;
+
+  for (int i = 0; i < N; i++) {
+    int a;
+    cin >> a;
+    bool find = store.find(a) != store.end();
+    if (find)
+      store[a].push_back(i);
+    else
+      store.insert({a, {i}});
+  }
+  // here
+  cout << store.size() << '\n';
+  for (auto it = store.begin(); it != store.end(); it++) {
+    int item = it->first;
+    vector<int> itemList = it->second;
+    if (itemList.size() == 0)
       continue;
-    else if (a[i].size() == 1)
-      ans.push_back({i, 0});
+    else if (itemList.size() == 1)
+      cout << item << ' ' << 0 << '\n';
     else {
-      int d = a[i][1] - a[i][0];
-      bool flag = true;
-      for (int j = 1; j < a[i].size(); j++) {
-        if (a[i][j] - a[i][j - 1] != d) {
-          flag = false;
-          break;
-        }
-      }
-      if (flag) {
-        ans.push_back({i, d});
-      }
+      int curr = itemList[1] - itemList[0];
+      bool wrong = false;
+      for (int k = 0; k < itemList.size() - 1, wrong = false; k++)
+        if (itemList[k + 1] - itemList[k] != curr)
+          wrong = true;
+      cout << item << ' ' << curr << '\n';
     }
   }
-  cout << ans.size() << "\n";
-  for (int i = 0; i < ans.size(); i++) {
-    cout << ans[i].first << " " << ans[i].second << "\n";
-  }
-  return 0;
 }
