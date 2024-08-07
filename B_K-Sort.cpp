@@ -13,37 +13,39 @@ const int MXN = 1e5 + 5, INF = 1e9 + 5;
 void solve() {
   int N;
   cin >> N;
-  vector<int> arr(N);
-
-  for (auto &a : arr)
+  vector<int> arr(N + 1, 0);
+  int min = -9999;
+  bool sorted = true;
+  for (int i = 1; i <= N; i++) {
+    int a;
     cin >> a;
+    if (a < min)
+      sorted = false;
 
-  vector<int> sorted = arr;
+    min = max(a, min);
 
-  sort(sorted.begin(), sorted.end());
-  bool isSorted = true;
-  for (int i = 0; i < N; i++)
-    if (arr[i] != sorted[i]) {
-      isSorted = false;
-      break;
-    }
+    arr[i] = a;
+  }
 
-  if (isSorted) {
+  if (sorted) {
     cout << 0 << '\n';
     return;
   }
-
-  int coin = 0;
-
-  for (int i = 0; i < N - 1; i++)
+  int sum = 0;
+  for (int i = 0; i < N; i++)
     if (arr[i] > arr[i + 1]) {
       const int diff = abs(arr[i] - arr[i + 1]);
       arr[i + 1] += diff;
-      coin += diff;
-      //   dbg(diff, coin);
+      sum += diff;
     }
 
-  cout << coin + 1 << '\n';
+  cout << endl;
+  for (auto a : arr)
+    cout << a << ' ';
+
+  cout << endl;
+
+  cout << sum + 1 + arr[1] << '\n';
 }
 
 signed main() {
