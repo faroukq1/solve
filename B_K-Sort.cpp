@@ -32,6 +32,7 @@ void solve() {
     return;
   }
   int sum = 0;
+
   for (int i = 0; i < N; i++)
     if (arr[i] > arr[i + 1]) {
       const int diff = abs(arr[i] - arr[i + 1]);
@@ -39,13 +40,7 @@ void solve() {
       sum += diff;
     }
 
-  cout << endl;
-  for (auto a : arr)
-    cout << a << ' ';
-
-  cout << endl;
-
-  cout << sum + 1 + arr[1] << '\n';
+  cout << sum + 1 << '\n';
 }
 
 signed main() {
