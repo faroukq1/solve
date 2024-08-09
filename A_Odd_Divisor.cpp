@@ -11,11 +11,10 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 const int MXN = 1e5 + 5, INF = 1e9 + 5;
 using ll = long long;
 
-bool isPowerOfTwo(ll n) { return (n & (n - 1)) == 0; }
 void solve() {
   ll n;
   cin >> n;
-  if (isPowerOfTwo(n))
+  if ((n & (n - 1)) == 0)
     cout << "NO" << endl;
   else
     cout << "YES" << endl;
