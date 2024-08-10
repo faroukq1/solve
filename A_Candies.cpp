@@ -13,15 +13,19 @@ const int MXN = 1e5 + 5, INF = 1e9 + 5;
 void solve() {
   long long N;
   cin >> N;
-  long long k = 2, x = 1, sum = 0;
-  while (sum < N) {
-    for (int i = 1; i <= k; i++)
-      sum = x * pow(2, i);
-
-    x++;
-    k++;
+  // 3 : 1 * 1 + 2 * 1 = 3 (k == 2)
+  // 6 : 1 * 2 + 2 * 2 = 6 (k == 6)
+  long long x = 1;
+  long long cpt = 0;
+  for (long long k = 3; k < 100; k++) {
+    while (k >= 1) {
+      cpt += (k * x);
+      cout << cpt << ' ';
+      if (cpt == N)
+        break;
+    }
   }
-  cout << x;
+  cout << endl;
 }
 
 signed main() {
