@@ -17,7 +17,9 @@ void solve() {
   cin >> lang;
   pair<char, char> v = {'a', 'e'};
   set<char> letters = {'a', 'e', 'b', 'c', 'd'};
-  auto isVowel = [&](char c) -> bool { return c == v.first || c == v.second; };
+  auto isVowel = [&](char c) -> bool {
+    return (c == v.first || c == v.second);
+  };
   auto isLeter = [&](char c) -> bool {
     return letters.find(c) != letters.end();
   };
