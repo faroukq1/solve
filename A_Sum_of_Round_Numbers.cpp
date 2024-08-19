@@ -11,25 +11,24 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 const int MXN = 1e5 + 5, INF = 1e9 + 5;
 
 void solve() {
-  string N, temp = "";
+  int N;
   cin >> N;
-  vector<string> ans;
+  vector<int> ans;
   int cpt = 0;
-  for (int i = 0; i < N.length(); i++) {
-    if (N[i] != '0')
-      cpt++;
-    if (cpt > 1) {
-      ans.push_back(temp);
-      temp = "";
-      cpt = 0;
-    }
-    temp.push_back(N[i]);
+  while (N != 0) {
+    int temp = N % 10;
+    if (temp != 0)
+      ans.push_back(temp * pow(10, cpt));
+
+    cpt++;
+    N = N / 10;
   }
 
-  ans.push_back(temp);
-
+  cout << ans.size() << endl;
   for (auto a : ans)
-    cout << a << endl;
+    cout << a << ' ';
+
+  cout << endl;
 }
 
 signed main() {
