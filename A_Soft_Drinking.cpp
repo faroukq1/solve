@@ -16,6 +16,5 @@ signed main() {
   vector<int> arr(8);
   for (auto &a : arr)
     cin >> a;
-
   return 0;
 }
