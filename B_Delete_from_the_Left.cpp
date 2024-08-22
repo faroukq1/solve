@@ -21,13 +21,11 @@ signed main() {
   }
   int cpt = 0, i = a.length() - 1, j = b.length() - 1;
 
-  while (i >= 0 || j >= 0) {
-    if (a[i] != b[j])
+  while (i >= 0 || j >= 0)
+    if (a[i--] == b[j--])
+      cpt++;
+    else
       break;
-    cpt++;
-    j--;
-    i--;
-  }
 
   cout << (a.length() + b.length()) - 2 * cpt << endl;
   return 0;
