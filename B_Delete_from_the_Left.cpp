@@ -15,7 +15,20 @@ signed main() {
   cin.tie(nullptr);
   string a, b;
   cin >> a >> b;
-  int cpt = 0;
+  if (a.back() != b.back()) {
+    cout << a.length() + b.length() << endl;
+    return 0;
+  }
+  int cpt = 0, i = a.length() - 1, j = b.length() - 1;
 
+  while (i >= 0 || j >= 0) {
+    if (a[i] != b[j])
+      break;
+    cpt++;
+    j--;
+    i--;
+  }
+
+  cout << (a.length() + b.length()) - 2 * cpt << endl;
   return 0;
 }
