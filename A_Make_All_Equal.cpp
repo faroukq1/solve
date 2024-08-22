@@ -11,22 +11,13 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 const int MXN = 1e5 + 5, INF = 1e9 + 5;
 
 void solve() {
-  int N;
+  int N, mx = 0;
   cin >> N;
-  vector<int> arr(N);
-  for (auto &a : arr)
-    cin >> a;
-
-  if (N == 1) {
-    cout << 0 << endl;
-    return;
-  }
   map<int, int> store;
-
-  for (int i = 0; i < N; i++)
-    store[arr[i]]++;
-
-  int mx = 0;
+  for (int i = 0, a; i < N; i++) {
+    cin >> a;
+    store[a]++;
+  }
   for (auto &a : store)
     mx = max(a.second, mx);
 
