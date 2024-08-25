@@ -1,32 +1,37 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
+  cerr << ' ' << H;
+  dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 
 
-
-
-int main() {
+void solve () {
   int N;
   cin >> N;
-
-  vector<int> arr(N), remove;
+  vector<int> arr(N);
 
   for (auto &a : arr)
-    cin >> a;
+      cin >> a;
 
   sort(arr.begin(),arr.end());
 
-  set <int> seen;
 
-  for (int i = 0 ; i < N ; i++) {
-    auto isHere = seen.find(arr[i]);
-    if (isHere == seen.end()) {
-      remove.push_back(arr[i]);
-      seen.insert(arr[i]);
-    }
-  }
-
-  for (auto &a : remove)
+  for (auto &a : arr)
     cout << a << ' ';
-} 
+
+  cout << endl;
+}
+
+
+int main () {
+    int tt;
+    cin >> tt;
+    while (tt--)
+      solve();
+    return 0;
+}
