@@ -10,7 +10,7 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 
 
 void solve () {
-    int a , b;
+    long long a , b;
     cin >> a >>b;
     if (a == b)
         cout<<"0 0";
