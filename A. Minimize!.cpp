@@ -10,12 +10,9 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 
 
 void solve () {
-    int a , b , ans = 11;
+    int a , b ;
     cin >> a >> b;
-    for (int i = a ; i <= b ; i++)
-        ans = min(ans , (i - a) + (b - i));
-
-    cout << ans << endl;
+    cout << b - a << endl;
 }
 
 
