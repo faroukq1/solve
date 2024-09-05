@@ -8,22 +8,18 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-
-void solve () {
-   long t; 
-   scanf("%ld", &t);
-        long l, r, a; scanf("%ld %ld %ld", &l, &r, &a);
-        long d = r / a;
-        long m = r % a;
-        long res = d + m;
-        long prev = (d - 1) * a + (a - 1);
-        if(prev >= l){
-            long tmp = (d - 1) + (a - 1);
-            res = (res > tmp) ? res : tmp;
-        }
-
-    printf("%ld\n", res);
+void solve() {
+    int64_t l, r, a;
+    cin >> l >> r >> a;
     
+    int64_t max_value = (r / a) + (r % a);
+    
+    int64_t x = r - (r % a) - 1;
+    if (x >= l) {
+        max_value = max(max_value, (x / a) + (x % a));
+    }
+
+    cout << max_value << endl;
 }
 
 
