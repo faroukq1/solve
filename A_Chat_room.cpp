@@ -8,15 +8,14 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-const int MXN = 1e5 + 5, INF = 1e9 + 5;
-
-signed main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
+int main () {
   string s;
   cin >> s;
-  vector<char> correct = {'h', 'e', 'l', 'l', 'o'};
+  string greeting = "hello";
+  int index = 0;
+  for (int i = 0 ; i <s.length() ; i++)
+    if (index < 5 && s[i] == greeting[index])
+      index++;
 
-  string greating = "";
-  set<char> seen;
+  cout << (index == 5 ? "YES" : "NO") << endl;
 }
