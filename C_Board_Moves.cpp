@@ -9,8 +9,8 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void solve () {
-    long long a , b;
-    cin >> a >> b;
+    int N;
+    cin >> N;
     
 }
 int main () {
