@@ -11,35 +11,31 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 void solve() {
     int N;
     cin >> N;
-    vector<int> arr(N);
 
-    for (auto &a : arr)
+    int first = 0 , second = 0;
+    int first_size = 0 , second_size = 0;
+    for (int i = 0 ; i < N ; i++) {
+        int a;
         cin >> a;
 
-    if (N == 1) {
-        cout << arr[0] << endl;
-        return;
+        if (i % 2 == 0) {
+            first = max(first , a);
+            first_size++;
+        } else {
+            second = max(second , a);
+            second_size++;
+        }
     }
 
-    vector<int> A, B;
-
-    for (int i = 0; i < N; i++) {
-        if (i % 2 == 0)
-            A.push_back(arr[i]);
-        else
-            B.push_back(arr[i]);
-    }
-
-    int max_A = A.empty() ? INT_MIN : *max_element(A.begin(), A.end());
-    int max_B = B.empty() ? INT_MIN : *max_element(B.begin(), B.end());
-
-    if (max_A >= max_B) 
-        cout << max_A + A.size();
+    
+    if (first + first_size >= second + second_size)
+        cout << first + first_size;
     else
-        cout << max_B + B.size();
+        cout << second + second_size;
 
     cout << endl;
 }
+
 
 int main() {
     int tt;
