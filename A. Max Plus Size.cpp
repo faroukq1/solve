@@ -8,8 +8,7 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-
-void solve () {
+void solve() {
     int N;
     cin >> N;
     vector<int> arr(N);
@@ -17,19 +16,22 @@ void solve () {
     for (auto &a : arr)
         cin >> a;
 
-    
-    vector<int> A , B;
+    if (N == 1) {
+        cout << arr[0] << endl;
+        return;
+    }
 
-    for (int i = 0 ; i < N ; i++)
+    vector<int> A, B;
+
+    for (int i = 0; i < N; i++) {
         if (i % 2 == 0)
             A.push_back(arr[i]);
         else
             B.push_back(arr[i]);
+    }
 
-
-    int max_A = *max_element(A.begin(),A.end());
-    int max_B = *max_element(B.begin(),B.end());
-
+    int max_A = A.empty() ? INT_MIN : *max_element(A.begin(), A.end());
+    int max_B = B.empty() ? INT_MIN : *max_element(B.begin(), B.end());
 
     if (max_A >= max_B) 
         cout << max_A + A.size();
@@ -37,9 +39,9 @@ void solve () {
         cout << max_B + B.size();
 
     cout << endl;
-
 }
-int main () {
+
+int main() {
     int tt;
     cin >> tt;
     while (tt--)
