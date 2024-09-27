@@ -20,7 +20,7 @@ int main () {
 
     sort(arr.begin(),arr.end());
 
-    long long ans = 0;
+    long long ans = 1;
 
     for (long long i = 0 ; i < N ; i++)
         if (arr[i].second < arr[i - 1].second)
