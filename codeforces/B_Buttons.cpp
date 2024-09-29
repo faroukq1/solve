@@ -9,15 +9,9 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 int main () {
-    int N , M , K;
-    cin >> N >> M >> K;
-    vector<int> applicant(N) , apartment(M);
-
-    for (auto &a : applicant)
-        cin >> a;
-    for (auto &a : apartment)
-        cin >> a;
-
+    int N;
+    cin >> N;
+    // 2 the right choise is 1 and 2
     
     return 0;
 }
