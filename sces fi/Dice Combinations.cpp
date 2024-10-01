@@ -1,18 +1,33 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
-  cerr << ' ' << H;
-  dbg_out(T...);
+
+long long countWaysUtil(long long n, vector<long long>& memo) {
+    // Base cases
+    if (n == 0) return 1; 
+    if (n < 0) return 0; 
+
+    if (memo[n] != -1) return memo[n];
+
+    memo[n] = 0;
+    for (long long i = 1; i <= 6; ++i) {
+        memo[n] += countWaysUtil(n - i, memo);
+    }
+    
+    return memo[n];
 }
-#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
+
+long long countWays(long long n) {
+    vector<long long> memo(n + 1, -1);
+    return countWaysUtil(n, memo);
+}
+
 
 long long MOD = 10e9 + 7;
-
-int main () {
-    int N;
-    cin >> N;
-    
+int main() {
+    long long n;
+    cin >> n;
+    cout << countWays(n) % MOD;
     return 0;
 }
