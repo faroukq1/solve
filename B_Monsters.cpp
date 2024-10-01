@@ -12,35 +12,24 @@ void dbg_out(Head H, Tail... T) {
 void solve() {
     int N, M;
     cin >> N >> M;
-    vector<int> arr(N + 1);
-
-    for (int i = 1; i <= N; i++)
+    vector<int> arr(N);
+    for (int i = 0 ; i < N ; i++)
         cin >> arr[i];
 
-    set<pair<int, int>> store;
+    vector<pair<int , int>> hMap;
 
-    for (int i = 1; i <= N; i++)
-        store.insert({arr[i], i});
+    for (int i = 0 ; i < N ; i++) {
+        long long res = arr[i] % M;
+        if (res == 0)
+            res += M;
 
-    while (!store.empty()) {
-        auto last = prev(store.end()); 
-
-        if (last->first == -1) {
-            store.erase(last);
-            continue;
-        }
-        
-        int value = last->first;
-        int idx = last->second;
-
-        if (value - M <= 0) {
-            cout << idx << ' ';
-            store.erase(last);
-        } else {
-            store.erase(last); 
-            store.insert({value - M, idx}); 
-        }
+        hMap.push_back({-res , i});
     }
+
+    sort(hMap.begin(),hMap.end());
+
+    for (auto & a : hMap)
+        cout << a.second + 1 << ' ';
 
     cout << endl;
 }
