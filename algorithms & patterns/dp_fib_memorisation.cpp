@@ -49,6 +49,28 @@ int main () {
     for (int i = 1 ; i <= N ; i++)
         cout << fib_memorisation(i , store) << endl;
 
-    
-    return 0;
+    /*
+    the time complexity
+    the new tree will be like this
+
+        
+                        fib(7)
+                        /  
+                    fib(6)      
+                    /      
+                fib(5)  
+                /       
+            fib(4)  
+            /      
+        fib(3)
+        /     
+    fib(2)
+        /  \
+    fib(1) fib(0)
+
+
+    so the complexity is 2 * N and the notation is  will be O(N)
+
+    */
+
 }
