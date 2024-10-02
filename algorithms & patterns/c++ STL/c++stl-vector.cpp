@@ -67,7 +67,7 @@ int main () {
     cout << "first way (by reference) : " << endl;  
     auto it = vec.begin();
     while (it != vec.end())
-    	cout << *it++ << 	' ';
+    	cout << *it++ << ' ';
     cout << endl;
 
     cout << "by index : " << endl;
@@ -96,10 +96,10 @@ int main () {
     auto compare = [&] (pair<int , int >&a , pair < int , int >&b) -> bool {
     	return a.first > b.first;
     };
-
+    cout << "compare between pairs : " << endl;
     sort(pair_vector.begin(),pair_vector.end() , compare);
     for (auto &a : pair_vector)
-    	cout << a.first << ' ' << a.second << ' ';
+    	cout << a.first << ':' << a.second << ' ';
     cout << endl;
 
 
@@ -124,6 +124,8 @@ int main () {
         }
         return file1.eof() && file2.eof();
     };
+
+
     bool check = compareFiles("output.txt","expected.txt");
     if (check) cerr<<"OK\n";
     else cerr<<"Failed!\n";
