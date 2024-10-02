@@ -3,3 +3,6 @@
 .gitignore/
 .bin/
 *.bin
+input.txt
+output.txt
+expected.txt

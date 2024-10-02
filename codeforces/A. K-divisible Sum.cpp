@@ -8,12 +8,18 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-    void solve () {
-	int N;
-	cin >> N;
+void solve () {
+	long long N , M;
+	cin >> N >> M;
 
-	for (int i = 1 ; i <= N ; i++)
-		cout << i << ' ';
+	if (N % M == 0)
+		cout << 1;
+	else if (M % N == 0)
+		cout << M / N; 
+	else if (N > M)
+		cout << 2;
+	else
+		cout << (M / N) + 1;
 
 	cout << endl;
 }
