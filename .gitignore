@@ -6,3 +6,4 @@
 input.txt
 output.txt
 expected.txt
+*.exe
