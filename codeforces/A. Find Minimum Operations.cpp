@@ -23,7 +23,7 @@ void solve () {
         }
         ans.push_back(P);
     }
-
+    
 }
 int main () {
     long long tt;
