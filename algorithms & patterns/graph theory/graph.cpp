@@ -63,5 +63,5 @@ int main () {
 
     // the edge 1 can go the edge == 2 but the 2 can't
     add_direct_edge_adj_list(adj_list_directed , 1 , 2);
-
+    
 }
