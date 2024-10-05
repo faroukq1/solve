@@ -61,7 +61,7 @@ int main () {
      
     USE CASES :
         1 - finding connected component (done)
-        2 - detect and find cycles in a graph
+        2 - detect and find cycles in a graph (done)
         3 - check if a graph is bipartite
         4 - find strongly connected compoennts
         5 - topologically sort the nodes of a graph
