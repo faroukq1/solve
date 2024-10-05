@@ -60,7 +60,7 @@ int main () {
         printed nodes : ( 0 1 3 4 2 )
      
     USE CASES :
-        1 - finding connected component
+        1 - finding connected component (done)
         2 - detect and find cycles in a graph
         3 - check if a graph is bipartite
         4 - find strongly connected compoennts
