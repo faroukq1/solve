@@ -8,7 +8,19 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
+
+void solve () {
+    int l , r , L , R;
+    cin >> l >> r >> L >> R;
+    if (r < L)
+        cout << L - r << endl;
+    else
+        cout << r - L << endl;
+}
 int main () {
-    
+    int tt;
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
