@@ -10,20 +10,15 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 
 
 void solve () {
-    int N , K;
-    cin >> N >> K;
+    int N , M;
+    cin >> N >> M;
     vector<int> arr(N);
-    vector<vector<int>> box;
     for (auto &a : arr)
-        cin >> a;
-
-    for (int i = 0 ; i < N - 1 ; i++)
-        if (arr[i] > arr[i + 1])
-}
+        cin >> a;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+} 
 int main () {
     int tt;
     cin >> tt;
     while (tt--)
         solve();
-    return 0;
 }
