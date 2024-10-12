@@ -23,8 +23,7 @@ void solve () {
 
     int mn = 0 , min_cost = 0 , ans = 0;
     for (int i = 0 ; i < M ; i++) {
-        if (arr[i] == 0)
-            min_cost--;
+        if (arr[i] == 0) min_cost--;
         else {
             ans = min(min_cost , ans);
             min_cost = 0;
@@ -32,8 +31,7 @@ void solve () {
     }
 
     for (int i = M - 2 ; i >= 0 ; i--)
-        if (arr[i] == 0)
-            min_cost--;
+        if (arr[i] == 0) min_cost--;
         else {
             ans = min(min_cost , ans);
             min_cost = 0;
