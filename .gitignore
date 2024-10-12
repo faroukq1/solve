@@ -1,5 +1,5 @@
 .vscode/
-.cph
+.cph/
 .gitignore/
 .bin/
 *.bin
