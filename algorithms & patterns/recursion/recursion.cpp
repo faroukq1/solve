@@ -107,7 +107,22 @@ long long sum_of_natural_numbers (long long number) {
   return number + sum_of_natural_numbers(number - 1);
 }
 
- 
+// devide and concer algorithm
+// 1 - binary search
+
+int recursive_binary_search (vector<int>& arr , int left , int right , int target) {
+  if (left > right)
+    return -1;
+
+  const int mid = (left + right) / 2;
+  if (arr[mid] == target) return mid;
+
+  if (arr[mid] > target)
+    return recursive_binary_search(arr , left , mid - 1 , target);
+  else
+    return recursive_binary_search(arr , mid + 1 , right , target);
+}
+
 int main () {
   // run_recursion_case();
   // run_A_B_C_case();
@@ -116,5 +131,7 @@ int main () {
   // cout << (is_kayak_palindrom ? "kayak palindrom" : "kayan not palindrom") << endl;
   // cout << (is_random_palindrom ? "random palindrom" : "random not palindrom") << endl;
   // cout << decimal_to_binary(2);
-  // cout << sum_of_natural_numbers(10); 
+  // cout << sum_of_natural_numbers(10);
+  vector <int> arr = {1 , 2 , 3};
+  cout << recursive_binary_search(arr , 0 , 2 , 2) << endl;
 }
