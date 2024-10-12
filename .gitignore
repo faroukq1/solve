@@ -40,3 +40,9 @@ venv/
 # Ignore compiled C++ files
 *.gch
 *.dSYM
+
+
+#expected and input and output
+input.txt
+output.txt
+expected.txt
