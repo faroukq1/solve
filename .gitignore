@@ -1,9 +1,42 @@
-.vscode/
-.cph/
-.gitignore/
-.bin/
-*.bin
-input.txt
-output.txt
-expected.txt
+# Ignore compiled files and executables
 *.exe
+*.cph
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore build directories
+build/
+dist/
+
+# Ignore temporary files and directories
+*.tmp
+*.log
+*.bak
+*.swp
+*.out
+
+# Ignore binary files
+*.bin
+*.dll
+*.o
+*.obj
+
+# Ignore editor files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore node modules and package files
+node_modules/
+package-lock.json
+
+# Ignore Python virtual environment
+venv/
+.env
+
+# Ignore compiled C++ files
+*.gch
+*.dSYM
