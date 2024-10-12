@@ -91,15 +91,23 @@ bool palindrom_recursion (string s) {
 
 // recursion with numbers
 
-long long decimal_to_binary (long long number , long long mod = 0) {
-  if (number == 0)
-    return mod;
-  
-  long long new_mod = (mod * 10) + number % 2;
+string decimal_to_binary (long long number , string res = "") {
+  if (number == 0) {
+    reverse(res.begin(),res.end());
+    return res;
+  }
 
-  return decimal_to_binary(number / 2 , new_mod);
+  string temp_res = res + to_string(number % 2);
+  return decimal_to_binary(number / 2 , temp_res);
 }
 
+long long sum_of_natural_numbers (long long number) {
+  if (number == 1)
+    return number;
+  return number + sum_of_natural_numbers(number - 1);
+}
+
+ 
 int main () {
   // run_recursion_case();
   // run_A_B_C_case();
@@ -107,6 +115,6 @@ int main () {
   // bool is_kayak_palindrom = palindrom_recursion("kayak") , is_random_palindrom = palindrom_recursion("random");
   // cout << (is_kayak_palindrom ? "kayak palindrom" : "kayan not palindrom") << endl;
   // cout << (is_random_palindrom ? "random palindrom" : "random not palindrom") << endl;
-
-  cout << decimal_to_binary(2);
+  // cout << decimal_to_binary(2);
+  // cout << sum_of_natural_numbers(10); 
 }
