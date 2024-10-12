@@ -8,31 +8,12 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-
 void solve () {
-    int N , ans = 0;
+    int N;
     cin >> N;
-    int rock = 0 , empty = 0;
-    for (int i = 0 ; i < N ; i++) {
-        bool in_segment = i >= 2 && i <= N - 1;
-        char a;
-        cin >> a;
-        if (a == '#')
-            rock++;
-        else
-            empty++;
-        
-        if (rock >= 2) {
-            if (in_segment)
-                ans += (empty / 2);
-            else
-                ans += empty;
-            empty = 0;
-        }
-    }
-
-    cout << rock << ' ' << empty << endl;
+    set < int > seen;
 }
+
 int main () {
     int tt;
     cin >> tt;
@@ -40,6 +21,7 @@ int main () {
         solve();
     return 0;
 }
+
 
 /*
 ...
