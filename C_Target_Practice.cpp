@@ -31,21 +31,26 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 
-const int N = 10;
-void solve () {
-    vector<string> grid(N);
-    for (auto &g : grid)
-        cin >> g;
+const int B = 10;
+void solve() {
+    vector<string> m(B);
+    for(long p = 0; p < B; p++)
+        cin >> m[p];
 
-    int ans = 0;
-    for (int i = 0 ; i < N ; i++) {
-        for (int j = 0 ; j < N ; j++) {
-            
+    long total(0);
+    for(long row = 0; row < B; row++){
+        for(long col = 0; col < B; col++){
+                if(m[row][col] == '.'){continue;}
+                long xrow = (row < B - 1 - row) ? row : (B - 1 - row);
+                long xcol = (col < B - 1 - col) ? col : (B - 1 - col);
+                long score = 1 + (xrow < xcol ? xrow : xcol);
+                total += score;
         }
     }
+        
+    printf("%ld\n", total);
+    }
 
-    cout << ans << endl;
-}
 int main() {
     int tt;
     cin >> tt;
