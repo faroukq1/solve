@@ -30,8 +30,23 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
+
+void solve () {
+    int N , M , ans = 0;
+    cin >> N >> M;
+    string a , b;
+    cin >> a >> b;
+    while (a.find(b) == string::npos && ans < 10) {
+        ans++;
+        a = a + a;
+    }
+
+    cout << (ans == 10 ? -1 : ans) << endl;
+}
 int main() {
     int tt;
-    
+    cin >> tt;
+    while (tt--)
+        solve();
     return 0;
 }
