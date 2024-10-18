@@ -33,27 +33,16 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 
 
 void run_case () {
-    int N , K;
-    cin >> N >> K;
-    vector<int> ans , nums;
-    if (N < K && N % K != 0) 
-        cout << 1 << endl << N << endl;
-    else if (N % K != 0)
-        cout << 1 << endl << N << endl;
-    else {
-        for (int i = 1 ; i < N ; i++)
-            if (K % i != 0 && i != K)
-                nums.push_back(i);
-        
-        int last = nums.size() - 1;
-        while (last >= 0 && N >= 0) {
-            if (N - nums[last] >= 0)
-                N -= nums[last--];
-            else
-                last--;
-        }
-        cout << nums.size() << endl;
+    int N , M;
+    cin >> N >> M;
+    if (N % M != 0) {
+        cout << 1 << endl;
+        cout << N << endl;
+        return;
     }
+
+    cout << 2 << endl;
+    cout << N - 1 << ' ' << 1 << endl;
 }
 int main() {
     int tt;
