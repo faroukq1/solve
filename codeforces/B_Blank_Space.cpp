@@ -1,4 +1,27 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <array>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <cstring>
+#include <functional>
+#include <iomanip>
+#include <numeric>
+#include <random>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <algorithm>
+#include <limits>
+#include <string>
+#include <limits.h>
+
 using namespace std;
 
 void dbg_out() { cerr << endl; }
@@ -8,32 +31,27 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-const int MXN = 1e5 + 5, INF = 1e9 + 5;
 
-void solve() {
-  int N;
-  cin >> N;
-  vector<int> arr(N);
-  for (auto &a : arr)
-    cin >> a;
+void run_case () {
+    int N , blanc(0) , longest_blanc(0);
+    cin >> N;
+    vector<int> arr(N);
+    for (auto &a : arr)
+        cin >> a;
 
-  int sum = 0, mx = 0;
-  for (int i = 0; i < N; i++)
-    if (arr[i] != 0) {
-      mx = max(sum, mx);
-      sum = 0;
-    } else
-      sum++;
+    for (int i = 0 ; i < N ; i++)
+        if (arr[i] != 0) {
+            longest_blanc = max(longest_blanc , blanc);
+            blanc = 0;
+        } else
+            blanc++;
 
-  cout << max(sum, mx) << endl;
+    cout << max(blanc , longest_blanc) << endl;
 }
-
-signed main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-  int tt;
-  cin >> tt;
-  while (tt--)
-    solve();
-  return 0;
+int main() {
+    int tt;
+    cin >> tt;
+    while (tt--)
+        run_case();
+    return 0;
 }
