@@ -32,24 +32,25 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 
-void run_case () {
-    long long N , ans = 0;
+void solve () {
+    int N , ans = 0;
     cin >> N;
-    vector<long long> arr(N);
-    for (auto &a : arr) {
+    for (int i = 0 , a ; i < N ; i++) {
         cin >> a;
         ans ^= a;
     }
 
     if (N % 2 == 0)
-        cout << (ans == 0 ? 0 : -1) << endl;
+        cout << (ans == 0 ? 0 : -1);
     else
-        cout << ans << endl;
+        cout << ans;
+    
+    cout << endl;
 }
 int main() {
     int tt;
     cin >> tt;
     while (tt--)
-        run_case();
+        solve();
     return 0;
 }
