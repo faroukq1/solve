@@ -1,4 +1,27 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <array>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <cstring>
+#include <functional>
+#include <iomanip>
+#include <numeric>
+#include <random>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <algorithm>
+#include <limits>
+#include <string>
+#include <limits.h>
+
 using namespace std;
 
 void dbg_out() { cerr << endl; }
@@ -8,35 +31,48 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-const int MXN = 1e5 + 5, INF = 1e9 + 5;
-void solve() {
-  long long n, k;
-  string s;
 
-  cin >> n >> k >> s;
+void solve () {
+  int N , K;
+  string S;
+  cin >> N >> K >> S;
 
-  map<char, int> store;
-  for (auto &a : s)
-    store[a]++;
+  if (N == 1) {
+    cout << "YES" << endl;
+    return;
+  }
 
-  int odd = 0;
+  map < char , int > store;
+
+  for (auto &c : S)
+    store[c]++;
+
+  for (auto &item : store) {
+    if (K == 0)
+      break;
+
+    if (item.second & 1) {
+      item.second--;
+      K--;
+    }
+  }
+
+  int limits = 0;
 
   for (auto item : store)
     if (item.second & 1)
-      odd++;
+      limits++;
 
-  cout << (odd <= k + 1 ? "YES" : "NO") << endl;
-}
-
-signed main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-
-  int tt;
-  cin >> tt;
-
-  while (tt--)
-    solve();
-
-  return 0;
+    
+  cout << (limits <= 1 ? "YES" : "NO") << endl;
+} 
+int main() {
+ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    int tt;
+    cin >> tt;
+    while (tt--)
+      solve();
+    return 0;
 }
