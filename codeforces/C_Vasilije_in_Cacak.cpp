@@ -1,4 +1,27 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <array>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <cstring>
+#include <functional>
+#include <iomanip>
+#include <numeric>
+#include <random>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <deque>
+#include <stack>
+#include <queue>
+#include <algorithm>
+#include <limits>
+#include <string>
+#include <limits.h>
+
 using namespace std;
 
 void dbg_out() { cerr << endl; }
@@ -8,27 +31,28 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
+
 void solve () {
-    long long n , k , x , last;
-    cin >> n >> k >> x;
-    long long min_sum = k * (k + 1) / 2;
-    if (x < min_sum) {
-        cout << "NO" << endl;
-        return;
-    }    
+    long long N , K , X;
+    cin >> N >> K >> X;
 
-    long long max_sum = k * (2 * n - k + 1) / 2;
-
-    if (x > max_sum) {
+    long long min_sum = K * (K + 1) / 2;
+    if (X < min_sum) {
         cout << "NO" << endl;
         return;
     }
-    cout << "YES" << endl;
+
+    long long max_sum = K * (2 * N - K + 1) / 2;
+
+    if (X > max_sum)
+        cout << "NO" << endl;
+    else
+        cout << "YES" << endl;
 }
-
-
-
-int main () {
+int main() {
+ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
     int tt;
     cin >> tt;
     while (tt--)
