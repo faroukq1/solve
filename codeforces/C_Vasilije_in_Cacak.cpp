@@ -13,7 +13,25 @@
 #include <set>
 #include <map>
 #include <unordered_set>
-#include <unordered_map>
+#include <unordered_map>using namespace std;
+
+int main() {
+    srand(time(0));
+    int n = 10;
+    vector<int> arr(n);
+    for (int i = 0; i < n; ++i)
+        arr[i] = rand() % 100;
+
+    vector<int> lis;
+    for (int i = 0; i < n; ++i) {
+        auto pos = lower_bound(lis.begin(), lis.end(), arr[i]);
+        if (pos == lis.end()) lis.push_back(arr[i]);
+        else *pos = arr[i];
+    }
+
+    cout << "Length of Longest Increasing Subsequence: " << lis.size() << endl;
+    return 0;
+}
 #include <deque>
 #include <stack>
 #include <queue>
