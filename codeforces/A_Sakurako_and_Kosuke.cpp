@@ -31,30 +31,23 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-const int dx[4] = {-1, 1, -1, 1}; 
-const int dy[4] = {-1, -1, 1, 1};
-
 
 void solve () {
-  int a , b;
-  cin >> a >> b;
-  int x1 , y1 , x2 , y2;
-  cin >> x1 >> y1 >> x2 >> y2;
-  set <pair < int , int >> st1 , st2;
+    int N;
+    cin >> N;
 
-  for (int j = 0 ; j < 4 ; j++) {
-    st1.insert({x1+dx[j]*a, y1+dy[j]*b});
-    st2.insert({x2+dx[j]*a, y2+dy[j]*b});
-    st1.insert({x1+dx[j]*b, y1+dy[j]*a});
-    st2.insert({x2+dx[j]*b, y2+dy[j]*a});
-  }
+    int ans = 0;
+    bool turn = true;
+    for (int i = 0 ; i <= N && abs(ans) <= N; i++) {
+        if (turn) 
+            ans -= 2 * i - 1;
+        else
+            ans += 2 * i - 1;
 
-  int ans = 0;
+        turn ^= true;
+    }
 
-  for (auto x : st1)
-    if (st2.find(x) != st2.end()) ans++;
-
-  cout << ans << '\n'; 
+    cout << (turn ? "Kosuke" : "Sakurako") << endl;
 }
 int main() {
 ios_base::sync_with_stdio(0);
@@ -63,6 +56,6 @@ ios_base::sync_with_stdio(0);
     int tt;
     cin >> tt;
     while (tt--)
-      solve();
+        solve();
     return 0;
 }
