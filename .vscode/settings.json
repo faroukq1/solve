@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.css": "tailwindcss",
     "iostream": "cpp",
     "ostream": "cpp",
     "array": "cpp",
@@ -85,7 +86,8 @@
     "thread": "cpp",
     "typeindex": "cpp",
     "typeinfo": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "queue": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

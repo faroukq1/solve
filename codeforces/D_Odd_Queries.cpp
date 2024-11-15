@@ -17,34 +17,41 @@
 #include <vector>
 using namespace std;
 
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
+  cerr << ' ' << H;
+  dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
+
 void run_case() {
-    int N, Q;
+    int N , Q;
     cin >> N >> Q;
     vector<int> arr(N);
-    for (auto &a : arr)
-        cin >> a;
-
-    vector<int> prefix_sum(N + 1, 0);
-    for (int i = 0; i < N; ++i) {
+    for (int i = 0 ; i < N ; i++)
+        cin >> arr[i];
+    vector<int> prefix_sum(N + 1 , 0);
+    for (int i = 0 ; i < N ; i++)
         prefix_sum[i + 1] = prefix_sum[i] + arr[i];
-    }
 
     while (Q--) {
-        int a, b, c;
+        int a , b , c;
         cin >> a >> b >> c;
-        a--; b--;
+        a--;b--;
 
-        int original_sum = prefix_sum[N];
-        int range_sum = prefix_sum[b + 1] - prefix_sum[a];
-        int new_sum = original_sum - range_sum + (b - a + 1) * c;
+        int full = prefix_sum[N];
+        int range = prefix_sum[b + 1] - prefix_sum[a];
+        int ans = full - range + (b - a + 1) * c;
 
-        cout << (new_sum & 1 ? "YES" : "NO") << endl;
+        cout << (ans & 1 ? "YES" : "NO") << endl;
     }
 }
 
 int main() {
     ios::sync_with_stdio(false);
+#ifndef NEAL_DEBUG
     cin.tie(nullptr);
+#endif
 
     int tests;
     cin >> tests;
