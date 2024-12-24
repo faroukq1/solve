@@ -25,20 +25,19 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void run_case() {
-    int N , M , ans = 0;;
+    int N , M , ans = 0;
     cin >> N >> M;
     vector<string> words(N);
     for (auto &w : words)
         cin >> w;
 
-    for (int i = 0 ; i < N ; i++) {
-        const int len = words[i].length();
-
+    for (auto w : words) {
+        const int len = (int)w.length();
         if (M - len < 0)
             break;
 
-        ans++;
         M -= len;
+        ans++;
     }
 
     cout << ans << endl;
