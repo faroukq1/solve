@@ -25,15 +25,9 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void run_case() {
-    int N , cpt = 0;
-    cin >> N;
-    for (int i = 0 ; i < N ; i++) {
-        int a;
-        cin >> a;
-        cpt += a;
-    }
-    const int mod = cpt % N;
-    const int div = cpt / N;
+    int A , B , K;
+    cin >> A >> B >> K;
+    cout << max(B / K - A + 1 , 0) << endl;
 }
 
 int main() {
