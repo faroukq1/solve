@@ -25,8 +25,18 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void run_case() {
-    long long m , a , b , c , ans = 0;
-    cin >> m >> a >> b >> c;
+    long long A, B, C, D;
+    cin >> A >> B >> C >> D;
+    if (B > A)
+        B = A;
+
+    if (C > A)
+        C = A;
+
+    A *= 2;
+    A -= B + C;
+    
+    cout << B + C + min(A , D) << endl;
 }
 
 int main() {
