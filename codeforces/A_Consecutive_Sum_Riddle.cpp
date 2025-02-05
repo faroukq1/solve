@@ -25,24 +25,9 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void run_case() {
-    int N, M;
-    cin >> N >> M;
-    vector<int> arr(N);
-    for (auto &a : arr)
-        cin >> a;
-
-    if (M > 1) {
-        cout << "YES" << endl;
-        return;
-    }
-
-    for (int i = 0; i < N - 1; i++)
-        if (arr[i] > arr[i + 1]) {
-            cout << "NO" << endl;
-            return;
-        }
-
-    cout << "YES" << endl;
+    long long N;
+    cin >> N;
+    cout << -(N - 1) << " " << N << endl;
 }
 
 int main() {
