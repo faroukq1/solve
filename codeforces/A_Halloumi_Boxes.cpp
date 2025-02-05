@@ -31,18 +31,10 @@ void run_case() {
     for (auto &a : arr)
         cin >> a;
 
-    if (M > 1) {
+    if (M > 1)
         cout << "YES" << endl;
-        return;
-    }
-
-    for (int i = 0; i < N - 1; i++)
-        if (arr[i] > arr[i + 1]) {
-            cout << "NO" << endl;
-            return;
-        }
-
-    cout << "YES" << endl;
+    else 
+        cout << (is_sorted(arr.begin(), arr.end()) ? "YES" : "NO") << endl;
 }
 
 int main() {
