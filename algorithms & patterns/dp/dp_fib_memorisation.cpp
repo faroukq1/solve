@@ -9,7 +9,17 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 
+map <int, int> memorization;
+int fibonacci (int N) {
+    if (N <= 2)
+        return 1;
 
+    if (memorization.find(N) != memorization.end())
+        return memorization[N];
+
+    memorization[N] = fibonacci(N - 1) + fibonacci(N - 2);
+    return memorization[N];
+}
 // memorisation
 /*
     the key is to use fast data structure
