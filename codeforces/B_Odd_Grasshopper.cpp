@@ -25,19 +25,30 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void run_case() {
-    long long N, M;
-    cin >> N >> M;
-    long long M2 = M / 4 * 4;
-    while (M2 < M) {
-        if (N % 2 == 0)
-            N -= M2 + 1;
-        else
-            N += M2 + 1;
+    // long long N, M;
+    // cin >> N >> M;
+    // long long M2 = M / 4 * 4;
+    // while (M2 < M) {
+    //     if (N % 2 == 0)
+    //         N -= M2 + 1;
+    //     else
+    //         N += M2 + 1;
 
-        M2++;
+    //     M2++;
+    // }
+
+    // cout << N << endl;
+    long long X, N;
+    cin >> X >> N;
+    long long D = -1;
+    switch (N % 4) {
+        case 0 : D = 0; break;
+        case 1 : D = -N; break;
+        case 2 : D = 1; break;
+        case 3 : D = N + 1; break;
     }
 
-    cout << N << endl;
+    cout << (X % 2 == 0 ? X + D : X - D) << '\n';
 }
 
 int main() {
