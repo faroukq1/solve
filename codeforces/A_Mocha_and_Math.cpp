@@ -24,17 +24,33 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 }
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
-void run_case() {
-    long long N;
+void second_solution () {
+    int N;
     cin >> N;
-    vector<long long> arr(N);
+    vector<int> arr(N);
     for (auto &a : arr)
         cin >> a;
 
-    long long ans = arr.front();
+    int ans = arr.front();
+
     for (int i = 1; i < N; i++)
         ans = ans & arr[i];
 
+    // simple solution to understand
+    cout << ans << endl;
+}
+
+void run_case() {
+    int N;
+    cin >> N;
+    int ans;
+    cin >> ans;
+    N--;
+    while (N--) {
+        int a;
+        cin >> a;
+        ans = ans & a;
+    }
     cout << ans << endl;
 }
 
@@ -47,6 +63,8 @@ int main() {
     int tests;
     cin >> tests;
 
-    while (tests-- > 0)
+    while (tests-- > 0) {
         run_case();
+        // second_solution();
+    }
 }
