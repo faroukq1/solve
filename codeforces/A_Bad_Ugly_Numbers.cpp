@@ -12,15 +12,14 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 void solve () {
     int N;
     cin >> N;
-    
     vector<int> divs;
     auto valid_div = [&] (int num) -> bool {
-        for (auto &a : divs)
+        for (auto &a : divs)    
             if (num % a != 0)
                 return false;
         
         return true;
-    }
+    };
     int ans = 1;
     for (int i = 1 ; i <= N ; i++) {
         if (to_string(ans).length() == N) {
