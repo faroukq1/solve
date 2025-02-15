@@ -15,11 +15,8 @@ vector<int> solve(int n) {
     
     vector<int> ans(n);
     
-    // Start with the pattern [4,1,6,3,8,5,10,7,...]
-    // This ensures that adjacent sums are: 5,7,9,11,13,... which are mostly composite
     int evenNum = 4; // Start with 4
-    int oddNum = 1;  // Start with 1
-    
+    int oddNum = 1;
     for(int i = 0; i < n; i++) {
         if(i % 2 == 0) {
             // Place even numbers starting from 4
