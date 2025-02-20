@@ -12,10 +12,12 @@ void run_case() {
     // solving
     string s;
     cin >> s;
+    const int N = s.length();
     int ans = 0;
-    for (char c : s)
-        ans += int(c - '0');
-
+    for (int i = 0; i < N; i++) {
+        char curr = s[i];
+        ans += int(curr - '0');
+    }
     cout << ans << endl;
 }
 
