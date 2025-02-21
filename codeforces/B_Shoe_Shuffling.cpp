@@ -46,6 +46,7 @@ void run_case() {
 
 }
 
+
 int main() {
     ios::sync_with_stdio(false);
 #ifndef NEAL_DEBUG
