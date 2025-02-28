@@ -30,7 +30,7 @@ void run_case() {
     for (auto p : P)
         cout << p << ' ';
 
-    cout << endl;
+    return void(cout << endl);
 }
 
 int main() {
