@@ -1,12 +1,19 @@
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
+ 
+void dbg_out() { cerr << endl; }
+template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
+  cerr << ' ' << H;
+  dbg_out(T...);
+}
+#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 void run_case() {
-    // solving
+    // solving 
     string s;
     cin >> s;
-    const int len = s.length();
+    const int len = int(s.length());
+    dbg(s, len);
     if (len <= 10)
         cout << s << endl;
     else
@@ -15,17 +22,13 @@ void run_case() {
 
 int main() {
     ios::sync_with_stdio(false);
+#ifndef NEAL_DEBUG
     cin.tie(nullptr);
-    
-    // Read input
-    int t = 1;
-    // If there are multiple test cases, uncomment the next line
-    // cin >> t;
-    
-    // Process each test case
-    while (t--) {
+#endif
+
+    int tests = 1;
+    cin >> tests;
+
+    while (tests-- > 0)
         run_case();
-    }
-    
-    return 0;
 }

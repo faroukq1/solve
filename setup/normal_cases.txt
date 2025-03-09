@@ -104,66 +104,56 @@ if diff -Z "$MY_OUTPUT" output.txt > /dev/null; then
     echo -e "${GREEN}✅ Accepted${NC}"
 else
     echo -e "${RED}❌ Wrong Answer${NC}"
-    
-    # Count number of lines in both files to determine test cases
-    expected_lines=$(wc -l < output.txt)
-    actual_lines=$(wc -l < "$MY_OUTPUT")
-    
-    # Try to determine number of test cases
-    # Assuming first line of input contains the number of test cases
-    num_tests=$(head -n 1 input.txt | tr -d '[:space:]')
-    if ! [[ "$num_tests" =~ ^[0-9]+$ ]]; then
-        # If not a number, estimate based on output lines
-        num_tests=$(( (expected_lines + actual_lines) / 4 ))  # Rough estimate
-        if [ "$num_tests" -lt 1 ]; then num_tests=1; fi
-    fi
-    
-    # Process line by line comparison with test case headers
-    echo ""
-    test_case=1
-    expected_line=1
-    actual_line=1
-    
-    while [ "$test_case" -le "$num_tests" ] && [ "$expected_line" -le "$expected_lines" ] && [ "$actual_line" -le "$actual_lines" ]; do
-        echo -e "${CYAN}#Case $test_case${NC}"
-        
-        # Get current expected line
-        expected=$(sed -n "${expected_line}p" output.txt)
-        expected_line=$((expected_line + 1))
-        
-        # Get current actual line
-        actual=$(sed -n "${actual_line}p" "$MY_OUTPUT")
-        actual_line=$((actual_line + 1))
-        
-        # Display comparison with appropriate colors
-        echo -e "${GREEN}Expected: $expected${NC}"
-        
-        # Use GREEN for matching output, RED for non-matching
-        if [ "$expected" = "$actual" ]; then
-            echo -e "${GREEN}Your output: $actual${NC}"
-            echo -e "${GREEN}✓ This line matches${NC}"
-        else
-            echo -e "${RED}Your output: $actual${NC}"
-            # No detailed character-by-character differences
-        fi
-        
-        echo ""
-        test_case=$((test_case + 1))
-    done
-    
-    # Report if there are extra or missing lines
-    if [ "$expected_line" -le "$expected_lines" ]; then
-        echo -e "${RED}Missing output lines:${NC}"
-        tail -n +$expected_line output.txt | while read -r line; do
-            echo -e "${GREEN}Expected: $line${NC}"
-        done
-    elif [ "$actual_line" -le "$actual_lines" ]; then
-        echo -e "${RED}Extra output lines:${NC}"
-        tail -n +$actual_line "$MY_OUTPUT" | while read -r line; do
-            echo -e "${RED}Your output: $line${NC}"
-        done
-    fi
 fi
+
+# Get number of test cases from the first line of input
+num_tests=$(head -n 1 input.txt)
+if ! [[ "$num_tests" =~ ^[0-9]+$ ]]; then
+    # If not a number, assume 1 test case
+    num_tests=1
+fi
+
+echo -e "\n${CYAN}Showing all test cases:${NC}"
+
+# Display input file
+echo -e "\n${YELLOW}Input:${NC}"
+cat input.txt
+
+# Display expected output
+echo -e "\n${GREEN}Expected output:${NC}"
+cat output.txt
+
+# Display your output
+echo -e "\n${BLUE}Your output:${NC}"
+cat "$MY_OUTPUT"
+
+# Line by line comparison
+echo -e "\n${CYAN}Line by line comparison:${NC}"
+expected_lines=$(wc -l < output.txt)
+actual_lines=$(wc -l < "$MY_OUTPUT")
+max_lines=$(( expected_lines > actual_lines ? expected_lines : actual_lines ))
+
+for ((i=1; i<=max_lines; i++)); do
+    expected=$(sed -n "${i}p" output.txt 2>/dev/null)
+    actual=$(sed -n "${i}p" "$MY_OUTPUT" 2>/dev/null)
+    
+    if [ -z "$expected" ]; then
+        echo -e "${RED}Line $i: Missing expected output${NC}"
+        echo -e "${RED}Your output: $actual${NC}"
+    elif [ -z "$actual" ]; then
+        echo -e "${RED}Line $i: Missing your output${NC}"
+        echo -e "${GREEN}Expected: $expected${NC}"
+    elif [ "$expected" = "$actual" ]; then
+        echo -e "${GREEN}Line $i: MATCH${NC}"
+        echo -e "Expected: $expected"
+        echo -e "Your output: $actual"
+    else
+        echo -e "${RED}Line $i: DIFFERENT${NC}"
+        echo -e "${GREEN}Expected: $expected${NC}"
+        echo -e "${RED}Your output: $actual${NC}"
+    fi
+    echo ""
+done
 
 # Clean up
 rm -f "$MY_OUTPUT"
