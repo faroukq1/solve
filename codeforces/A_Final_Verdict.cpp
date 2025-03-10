@@ -12,14 +12,11 @@ void run_case() {
     // solving
     int N, X;
     cin >> N >> X;
-    vector<int> A(N);
-    for (int i = 0; i < N; i++)
-        cin >> A[i];
-
-    auto valid = [&] (int N, int X, vector<int>& A) {
-        return accumulate(A.begin(), A.end(), 0) == X * N;
-    };
-    cout << (valid(N, X, A) ? "YES" : "NO") << endl;
+    int sum = 0;
+    for (int i = 0; i < N; i++) {
+        int a; cin >> a; sum += a;
+    }
+    cout << (sum == X * N ? "YES" : "NO") << endl;
 }
 
 int main() {
