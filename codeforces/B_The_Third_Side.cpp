@@ -23,21 +23,24 @@ void run_case() {
 
 
 // solving using vec
+
+void update (vector<int>& A) {
+    sort(A.begin(), A.end());
+    const int size = A.size();
+    const int last = A[size - 1], before_last = A[size - 2];
+    A.erase(A.end() - 2, A.end());
+    A.push_back(last + before_last - 1);
+};
+
 void solve () {
     int N;
     cin >> N;
     vector<int> A(N);
     for (auto &a : A)
         cin >> a;
-
-    while (A.size() > 1) {
-        const int size = A.size();
-        const int last = A[size - 1];
-        const int before_last = A[size - 2];
-        const int add = last + before_last - 1;
-        A.erase(A.end() - 2, A.end());
-        A.push_back(add);
-    }
+        
+            while (A.size() > 1)
+        update(A);
 
     cout << A.front() << endl;
 }
