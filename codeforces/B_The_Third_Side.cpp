@@ -7,7 +7,8 @@ void run_case() {
     int N;
     cin >> N;
     priority_queue<int> pq;
-    for (int i = 0, a; i < N; i++) {
+    for (int i = 0; i < N; i++) {
+        int a;
         cin >> a;
         pq.push(a);
     }
