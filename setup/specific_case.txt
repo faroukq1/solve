@@ -1,0 +1,275 @@
+#!/bin/bash
+
+# Colors for better readability
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Print usage info
+function show_usage {
+    echo -e "${YELLOW}Usage: case <filename> [case number] [options]${NC}"
+    echo "    filename: C++ file name without .cpp extension"
+    echo "    case number: Specific test case number to run (optional)"
+    echo "Options:"
+    echo "    -t: Show execution time"
+    echo "    -m: Show memory usage"
+    echo "    -d: Debug mode (compile with debug flags)"
+    exit 1
+}
+
+# Check if a filename is provided
+if [ $# -eq 0 ]; then
+    echo -e "${RED}❌ Error: No C++ file provided!${NC}"
+    show_usage
+fi
+
+# Parse arguments
+FILENAME="$1"
+shift
+
+# Check if next argument is a number (case number)
+CASE_NUMBER=0
+if [[ $1 =~ ^[0-9]+$ ]]; then
+    CASE_NUMBER="$1"
+    shift
+fi
+
+SHOW_TIME=false
+SHOW_MEMORY=false
+DEBUG_MODE=false
+
+while getopts "tmd" opt; do
+    case $opt in
+        t) SHOW_TIME=true ;;
+        m) SHOW_MEMORY=true ;;
+        d) DEBUG_MODE=true ;;
+        *) show_usage ;;
+    esac
+done
+
+FILE="${FILENAME}.cpp"  # Add .cpp extension
+EXECUTABLE="${FILENAME}"  # Executable name
+
+# Verify source file exists
+if [ ! -f "$FILE" ]; then
+    echo -e "${RED}❌ Error: File '$FILE' not found!${NC}"
+    exit 1
+fi
+
+# Verify input/output files
+if [ ! -f "input.txt" ]; then
+    echo -e "${RED}❌ Error: input.txt not found!${NC}"
+    exit 1
+fi
+
+if [ ! -f "output.txt" ]; then
+    echo -e "${RED}❌ Error: output.txt not found!${NC}"
+    exit 1
+fi
+
+# Set compilation flags
+if [ "$DEBUG_MODE" = true ]; then
+    COMPILE_FLAGS="-std=c++17 -Wall -Wextra -g -DDEBUG -fsanitize=address,undefined"
+else
+    COMPILE_FLAGS="-std=c++17 -Wall -Wextra -O2"
+fi
+
+# Compile the C++ file
+echo -e "${BLUE}Compiling $FILE...${NC}"
+g++ $COMPILE_FLAGS "$FILE" -o "$EXECUTABLE"
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Compilation Error!${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✅ Compilation successful${NC}"
+
+# Create temporary files
+MY_OUTPUT="my_output.txt"
+TEMP_INPUT="temp_input.txt"
+TEMP_OUTPUT="temp_output.txt"
+
+# Extract specific test case if requested
+if [ "$CASE_NUMBER" -gt 0 ]; then
+    echo -e "${BLUE}Extracting test case $CASE_NUMBER...${NC}"
+    
+    # Get the total number of test cases from the first line
+    num_tests=$(head -n 1 input.txt)
+    if ! [[ "$num_tests" =~ ^[0-9]+$ ]]; then
+        # If not a number, assume 1 test case
+        echo -e "${YELLOW}Warning: Could not determine number of test cases from first line. Assuming single test case format.${NC}"
+        if [ "$CASE_NUMBER" -eq 1 ]; then
+            cp input.txt "$TEMP_INPUT"
+            cp output.txt "$TEMP_OUTPUT"
+        else
+            echo -e "${RED}❌ Error: Only 1 test case available but requested case $CASE_NUMBER${NC}"
+            rm -f "$EXECUTABLE"
+            exit 1
+        fi
+    else
+        if [ "$CASE_NUMBER" -gt "$num_tests" ]; then
+            echo -e "${RED}❌ Error: Requested test case $CASE_NUMBER but only $num_tests test cases available${NC}"
+            rm -f "$EXECUTABLE"
+            exit 1
+        fi
+        
+        # Extract test case from input file
+        # This assumes a specific format where:
+        # - First line is T (number of test cases)
+        # - Each test case has a consistent format
+        
+        # Create a Python script to extract test cases
+        cat > extract_testcase.py << 'EOF'
+import sys
+
+def extract_test_case(input_file, output_file, case_number, total_cases):
+    with open(input_file, 'r') as f:
+        lines = f.readlines()
+    
+    # Remove the first line (number of test cases)
+    lines = lines[1:]
+    
+    # Estimate lines per test case
+    lines_per_case = len(lines) // total_cases
+    
+    # Extract the specific test case
+    start_idx = (case_number - 1) * lines_per_case
+    end_idx = case_number * lines_per_case if case_number < total_cases else len(lines)
+    
+    # Write "1" as the number of test cases, followed by the extracted case
+    with open(output_file, 'w') as f:
+        f.write("1\n")
+        f.writelines(lines[start_idx:end_idx])
+
+# Get arguments
+input_file = sys.argv[1]
+output_file = sys.argv[2]
+case_number = int(sys.argv[3])
+total_cases = int(sys.argv[4])
+
+extract_test_case(input_file, output_file, case_number, total_cases)
+EOF
+
+        # Extract input for the specific test case
+        python3 extract_testcase.py input.txt "$TEMP_INPUT" "$CASE_NUMBER" "$num_tests"
+        
+        # For output, we need to do a more complex extraction
+        # This is a best effort and might need adjustment for specific formats
+        
+        # Create a Python script to extract expected output
+        cat > extract_output.py << 'EOF'
+import sys
+
+def extract_output(output_file, temp_output, case_number, total_cases):
+    with open(output_file, 'r') as f:
+        lines = f.readlines()
+    
+    # Estimate lines per test case
+    lines_per_case = len(lines) // total_cases
+    
+    # Extract the specific test case output
+    start_idx = (case_number - 1) * lines_per_case
+    end_idx = case_number * lines_per_case if case_number < total_cases else len(lines)
+    
+    # Write the extracted output
+    with open(temp_output, 'w') as f:
+        f.writelines(lines[start_idx:end_idx])
+
+# Get arguments
+output_file = sys.argv[1]
+temp_output = sys.argv[2]
+case_number = int(sys.argv[3])
+total_cases = int(sys.argv[4])
+
+extract_output(output_file, temp_output, case_number, total_cases)
+EOF
+
+        # Extract expected output for the specific test case
+        python3 extract_output.py output.txt "$TEMP_OUTPUT" "$CASE_NUMBER" "$num_tests"
+        
+        # Clean up temporary Python scripts
+        rm -f extract_testcase.py extract_output.py
+    fi
+    
+    echo -e "${GREEN}✅ Test case $CASE_NUMBER extracted${NC}"
+else
+    # If no case number specified, use the entire input and output files
+    cp input.txt "$TEMP_INPUT"
+    cp output.txt "$TEMP_OUTPUT"
+fi
+
+# Run the program with input redirection and measure time
+echo -e "${BLUE}Running program...${NC}"
+
+if [ "$SHOW_TIME" = true ]; then
+    START_TIME=$(date +%s.%N)
+    time ./"$EXECUTABLE" < "$TEMP_INPUT" > "$MY_OUTPUT"
+    END_TIME=$(date +%s.%N)
+    ELAPSED_TIME=$(echo "$END_TIME - $START_TIME" | bc)
+    echo -e "${YELLOW}Execution time: ${ELAPSED_TIME} seconds${NC}"
+elif [ "$SHOW_MEMORY" = true ]; then
+    /usr/bin/time -v ./"$EXECUTABLE" < "$TEMP_INPUT" > "$MY_OUTPUT" 2> memory_info.txt
+    MAX_MEMORY=$(grep "Maximum resident set size" memory_info.txt | awk '{print $6}')
+    echo -e "${YELLOW}Peak memory usage: $MAX_MEMORY KB${NC}"
+    rm memory_info.txt
+else
+    ./"$EXECUTABLE" < "$TEMP_INPUT" > "$MY_OUTPUT"
+fi
+
+# Check if outputs match, ignoring whitespace differences
+if diff -Z "$MY_OUTPUT" "$TEMP_OUTPUT" > /dev/null; then
+    echo -e "${GREEN}✅ Accepted${NC}"
+else
+    echo -e "${RED}❌ Wrong Answer${NC}"
+fi
+
+echo -e "\n${CYAN}Test case details:${NC}"
+
+# Display input file
+echo -e "\n${YELLOW}Input:${NC}"
+cat "$TEMP_INPUT"
+
+# Display expected output
+echo -e "\n${GREEN}Expected output:${NC}"
+cat "$TEMP_OUTPUT"
+
+# Display your output
+echo -e "\n${BLUE}Your output:${NC}"
+cat "$MY_OUTPUT"
+
+# Line by line comparison
+echo -e "\n${CYAN}Line by line comparison:${NC}"
+expected_lines=$(wc -l < "$TEMP_OUTPUT")
+actual_lines=$(wc -l < "$MY_OUTPUT")
+max_lines=$(( expected_lines > actual_lines ? expected_lines : actual_lines ))
+
+for ((i=1; i<=max_lines; i++)); do
+    expected=$(sed -n "${i}p" "$TEMP_OUTPUT" 2>/dev/null)
+    actual=$(sed -n "${i}p" "$MY_OUTPUT" 2>/dev/null)
+    
+    if [ -z "$expected" ]; then
+        echo -e "${RED}Line $i: Missing expected output${NC}"
+        echo -e "${RED}Your output: $actual${NC}"
+    elif [ -z "$actual" ]; then
+        echo -e "${RED}Line $i: Missing your output${NC}"
+        echo -e "${GREEN}Expected: $expected${NC}"
+    elif [ "$expected" = "$actual" ]; then
+        echo -e "${GREEN}Line $i: MATCH${NC}"
+        echo -e "Expected: $expected"
+        echo -e "Your output: $actual"
+    else
+        echo -e "${RED}Line $i: DIFFERENT${NC}"
+        echo -e "${GREEN}Expected: $expected${NC}"
+        echo -e "${RED}Your output: $actual${NC}"
+    fi
+    echo ""
+done
+
+# Clean up
+rm -f "$MY_OUTPUT" "$TEMP_INPUT" "$TEMP_OUTPUT"
+rm -f "$EXECUTABLE"
+
+echo -e "${BLUE}Test completed${NC}"
