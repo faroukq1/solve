@@ -1,0 +1,162 @@
+#!/bin/bash
+
+# Colors for better readability
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+NC='\033[0m' # No Color
+
+# Print usage info
+function show_usage {
+    echo -e "${YELLOW}Usage: dbrun <filename> [options]${NC}"
+    echo "    filename: C++ file name without .cpp extension"
+    echo "Options:"
+    echo "    -t: Show execution time"
+    echo "    -m: Show memory usage"
+    echo "    -d: Debug mode (compile with debug flags)"
+    exit 1
+}
+
+# Check if a filename is provided
+if [ $# -eq 0 ]; then
+    echo -e "${RED}❌ Error: No C++ file provided!${NC}"
+    show_usage
+fi
+
+# Parse arguments
+FILENAME="$1"
+SHOW_TIME=false
+SHOW_MEMORY=false
+DEBUG_MODE=false
+
+shift
+while getopts "tmd" opt; do
+    case $opt in
+        t) SHOW_TIME=true ;;
+        m) SHOW_MEMORY=true ;;
+        d) DEBUG_MODE=true ;;
+        *) show_usage ;;
+    esac
+done
+
+FILE="${FILENAME}.cpp"  # Add .cpp extension
+EXECUTABLE="${FILENAME}"  # Executable name
+
+# Verify source file exists
+if [ ! -f "$FILE" ]; then
+    echo -e "${RED}❌ Error: File '$FILE' not found!${NC}"
+    exit 1
+fi
+
+# Verify input/output files
+if [ ! -f "input.txt" ]; then
+    echo -e "${RED}❌ Error: input.txt not found!${NC}"
+    exit 1
+fi
+
+if [ ! -f "output.txt" ]; then
+    echo -e "${RED}❌ Error: output.txt not found!${NC}"
+    exit 1
+fi
+
+# Set compilation flags
+if [ "$DEBUG_MODE" = true ]; then
+    COMPILE_FLAGS="-std=c++17 -Wall -Wextra -g -DDEBUG -fsanitize=address,undefined"
+else
+    COMPILE_FLAGS="-std=c++17 -Wall -Wextra -O2"
+fi
+
+# Compile the C++ file
+echo -e "${BLUE}Compiling $FILE...${NC}"
+g++ $COMPILE_FLAGS "$FILE" -o "$EXECUTABLE"
+
+if [ $? -ne 0 ]; then
+    echo -e "${RED}❌ Compilation Error!${NC}"
+    exit 1
+fi
+echo -e "${GREEN}✅ Compilation successful${NC}"
+
+# Create a temporary file for program's output
+MY_OUTPUT="my_output.txt"
+
+# Run the program with input redirection and measure time
+echo -e "${BLUE}Running program...${NC}"
+
+if [ "$SHOW_TIME" = true ]; then
+    START_TIME=$(date +%s.%N)
+    time ./"$EXECUTABLE" < input.txt > "$MY_OUTPUT"
+    END_TIME=$(date +%s.%N)
+    ELAPSED_TIME=$(echo "$END_TIME - $START_TIME" | bc)
+    echo -e "${YELLOW}Execution time: ${ELAPSED_TIME} seconds${NC}"
+elif [ "$SHOW_MEMORY" = true ]; then
+    /usr/bin/time -v ./"$EXECUTABLE" < input.txt > "$MY_OUTPUT" 2> memory_info.txt
+    MAX_MEMORY=$(grep "Maximum resident set size" memory_info.txt | awk '{print $6}')
+    echo -e "${YELLOW}Peak memory usage: $MAX_MEMORY KB${NC}"
+    rm memory_info.txt
+else
+    ./"$EXECUTABLE" < input.txt > "$MY_OUTPUT"
+fi
+
+# Check if outputs match, ignoring whitespace differences
+if diff -Z "$MY_OUTPUT" output.txt > /dev/null; then
+    echo -e "${GREEN}✅ Accepted${NC}"
+else
+    echo -e "${RED}❌ Wrong Answer${NC}"
+fi
+
+# Get number of test cases from the first line of input
+num_tests=$(head -n 1 input.txt)
+if ! [[ "$num_tests" =~ ^[0-9]+$ ]]; then
+    # If not a number, assume 1 test case
+    num_tests=1
+fi
+
+echo -e "\n${CYAN}Showing all test cases:${NC}"
+
+# Display input file
+echo -e "\n${YELLOW}Input:${NC}"
+cat input.txt
+
+# Display expected output
+echo -e "\n${GREEN}Expected output:${NC}"
+cat output.txt
+
+# Display your output
+echo -e "\n${BLUE}Your output:${NC}"
+cat "$MY_OUTPUT"
+
+# Line by line comparison
+echo -e "\n${CYAN}Line by line comparison:${NC}"
+expected_lines=$(wc -l < output.txt)
+actual_lines=$(wc -l < "$MY_OUTPUT")
+max_lines=$(( expected_lines > actual_lines ? expected_lines : actual_lines ))
+
+for ((i=1; i<=max_lines; i++)); do
+    expected=$(sed -n "${i}p" output.txt 2>/dev/null)
+    actual=$(sed -n "${i}p" "$MY_OUTPUT" 2>/dev/null)
+    
+    if [ -z "$expected" ]; then
+        echo -e "${RED}Line $i: Missing expected output${NC}"
+        echo -e "${RED}Your output: $actual${NC}"
+    elif [ -z "$actual" ]; then
+        echo -e "${RED}Line $i: Missing your output${NC}"
+        echo -e "${GREEN}Expected: $expected${NC}"
+    elif [ "$expected" = "$actual" ]; then
+        echo -e "${GREEN}Line $i: MATCH${NC}"
+        echo -e "Expected: $expected"
+        echo -e "Your output: $actual"
+    else
+        echo -e "${RED}Line $i: DIFFERENT${NC}"
+        echo -e "${GREEN}Expected: $expected${NC}"
+        echo -e "${RED}Your output: $actual${NC}"
+    fi
+    echo ""
+done
+
+# Clean up
+rm -f "$MY_OUTPUT"
+rm -f "$EXECUTABLE"
+
+echo -e "${BLUE}Test completed${NC}"
