@@ -29,10 +29,13 @@ void solve() {
     int64_t total = first / second;
     cout << total << endl;
     sort(S.begin(), S.end());
+    vector<string> ans;
     do {
-        cout << S << endl;
+        ans.push_back(S);
     } while (next_permutation(S.begin(), S.end()));
 
+    for (auto &a : ans)
+        cout << a << endl;
 }
 
 int main() {
