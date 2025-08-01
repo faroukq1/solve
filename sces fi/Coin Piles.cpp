@@ -9,7 +9,24 @@ template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
 #define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
 
 
-void solve () {
+
+
+void solve() {
+    int64_t a, b;
+    cin >> a >> b;
+
+    if ((a + b) % 3 != 0) {
+        cout << "NO\n";
+        return;
+    }
+
+    if (a > b) 
+        swap(a, b);
+
+    cout << (a * 2 < b ? "NO" : "YES") << endl;
+}
+// got limited time on this
+void run_case () {
     int64_t a, b;
     cin >> a >> b;
 
