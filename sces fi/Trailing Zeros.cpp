@@ -31,8 +31,13 @@ std::vector<int> factorial_digits(int n) {
 void solve () {
     int N;
     cin >> N;
-    cout << N / 5 << endl;
-    // to do
+    int64_t ans = 0;
+    for (int i = 5; i <= N; i *= 5) {
+        ans += (N / i);
+        // dbg(N, i, N / i);
+    }
+
+    cout << ans;
 }
 
 int main () {
