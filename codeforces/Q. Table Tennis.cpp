@@ -27,21 +27,17 @@ template <typename S, typename T> void smin(S &a, const T &b) {
 #define sz(x) (int)(x).size()
 const int MXN = 1e5 + 5, INF = 1e9 + 5;
 
-void main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
-
-    int N;
-    int64_t K;
-    cin >> N >> K;
-    vector<int> P(N);
-
-    for (auto &p : P)
-        cin >> p;
-        
-    if (N == 2)
-        return void(cout << *max_element(P.begin(), P.end()) << endl);
 
 
+void solve () {
     
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int test;
+    cin >> test;
+    while (test--)
+        solve();  
 }
