@@ -1,14 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void dbg_out() { cerr << endl; }
-template <typename Head, typename... Tail> void dbg_out(Head H, Tail... T) {
-  cerr << ' ' << H;
-  dbg_out(T...);
-}
-#define dbg(...) cerr << "(" << #__VA_ARGS__ << "):", dbg_out(__VA_ARGS__)
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
+    int N;
+    cin >> N;
 
-int main () {
+    deque<int> store;
+    for (int i = 0; i < N; i++) {
+        int a;
+        cin >> a;
+        store.push_back(a);
+    }
+
+    int X;
+    cin >> X;
+
+    priority_queue<int> pq;
+
+    for (int x = 0; x < X; x++) {
+        char move;
+        cin >> move;
+
+        if (move == 'L') {
+            if (store.empty()) {
+                cout << "-1\n";
+            } else {
+                pq.push(store.front());
+                store.pop_front();
+            }
+        }
+        else if (move == 'R') {
+            if (store.empty()) {
+                cout << "-1\n";
+            } else {
+                pq.push(store.back());
+                store.pop_back();
+            }
+        }
+        else if (move == 'Q') {
+            if (pq.empty()) {
+                cout << "-1\n";
+            } else {
+                cout << pq.top() << "\n";
+                pq.pop();
+            }
+        }
+    }
+
     return 0;
 }
